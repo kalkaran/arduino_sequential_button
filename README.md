@@ -3,8 +3,7 @@
 Arduino controlled DFPlayer mini playing mp3's sequentially
 
 Simple Button that, when pushed, plays the next mp3 on the SD card via a DFPlayer Mini and Arduino.
-Combining the schematics of the button example and examples of DFPlayer mini.
-
+(Based on the button example and examples of DFPlayer mini.)
 ## Button:
 ![Wiring Diagram Button](button_schematic.png)
 
