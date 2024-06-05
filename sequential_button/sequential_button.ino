@@ -29,29 +29,6 @@ DFPlayer - A Mini MP3 Player For Arduino
 //    In the root directory. File names with 4 digit prefixes 0001 to 3000. Command 0x03
 //    In folders named 01 – 15. File names with 4 digit prefixes 0001 – 3000. Command 0x14
 
-/*
- * Instructions for Formatting an SD Card on Mac:
- * Note: Be aware that deleting anything on the SD Card might create a .Trashes file,
- * which can only be deleted by reformatting the card.
- * 
- * Open Terminal and run the following commands:
- * 
- * 1. sudo diskutil list
- *    This should display something like the following for the SD card:
- *    /dev/disk4 (internal, physical):
- *      #:                       TYPE NAME                    SIZE       IDENTIFIER
- *      0:     FDisk_partition_scheme                        *31.9 GB    disk4
- *      1:                 DOS_FAT_32 NO_NAME                 31.9 GB    disk4s1
- *
- * 2. sudo diskutil eraseDisk FAT32 MUSIC MBRFormat /dev/disk4
- *    Then you need to erase .Spotlight-V100 and .fseventsd:
- * 3. sudo mdutil -d "/Volumes/MUSIC"
- * 4. sudo mdutil -X "/Volumes/MUSIC"
- * 5. rm -rf /Volumes/MUSIC/.fseventsd
- *    Remove any other .files that have snuck on:
- * 6. dot_clean -m /Volumes/MUSIC
- */
-
 // Global Variables
 const int buttonPin = 2;  // Pin number for the pushbutton
 const int ledPin = 13;    // Pin number for the LED
