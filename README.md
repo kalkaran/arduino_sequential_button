@@ -11,6 +11,9 @@ Combining the schematics of the button example and examples of DFPlayer mini.
 ## DFPlayer:
 ![Wiring Diagram MP3](mp3_schematic.png)
 
+## Combined Button Activated MP3 Player:
+![Wiring Diagram MP3](combined_schematic.png)
+
 ## Issues I Ran Into
 
 1. **Using the next command from the "DFRobotDFPlayerMini.h" library just resulted in random play.**
