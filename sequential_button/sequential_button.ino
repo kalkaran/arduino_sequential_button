@@ -67,12 +67,12 @@ void setup() {
   }else{
     delay(5000);
     Serial.println(F("DFPlayer Mini online."));
-    myDFPlayer.volume(30);  //Set volume value. (0 to 30)
+    myDFPlayer.volume(20);  //Set volume value. (0 to 30)
       
-    // Retrieve and print the number of folders
-    int folderCount = myDFPlayer.readFolderCounts();
-    Serial.print("Number of folders: ");
-    Serial.println(folderCount);
+    // Retrieve and print the number of folders - N.B. doesn't work 
+    // int folderCount = myDFPlayer.readFolderCounts();
+    // Serial.print("Number of folders: ");
+    // Serial.println(folderCount);
 
     // Specify the folder number and retrieve the number of files in that folder
     int folderNumber = 1; // Change this to the folder number you want to check
