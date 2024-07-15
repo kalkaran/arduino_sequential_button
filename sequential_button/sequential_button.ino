@@ -36,6 +36,11 @@ bool playstate = 0;       // Boolean to track play state
 int songIndex = 0;        // Index for the current song, starts at 0 - gets incremented to 1 on first play, as 1 is the first song.
 int totalSongs = 0;       // Total number of songs on the SD card
 int buttonState = 0;      // Current state of the button
+int lastButtonState = 0;   
+
+unsigned long debounceDelay = 400;      // Debounce delay in milliseconds
+unsigned long lastTriggerTime = 0;     // Last time the button input changed
+
 
 SoftwareSerial mySoftwareSerial(10, 11); // RX, TX for SoftwareSerial communication with MP3
 DFRobotDFPlayerMini myDFPlayer;         // Instance of the DFPlayer Mini library
@@ -78,31 +83,31 @@ void setup() {
     int folderNumber = 1; // Change this to the folder number you want to check
     int fileCount = myDFPlayer.readFileCountsInFolder(folderNumber);
     Serial.print("Number of files in folder ");
-    Serial.print(folderNumber);
-    Serial.print(": ");
-    Serial.println(fileCount);
-
+    Serial.println(folderNumber);
+    // Serial.print(": ");
+    // Serial.println(fileCount);
+    //Previous stage seems to load the folder for the readFileCounts, but the function "readFileCountsInFolder" returns -1 
     // Retrieve and print the total number of songs
     totalSongs = myDFPlayer.readFileCounts();
     Serial.print(F("Total songs: "));
     Serial.println(totalSongs);
     // LED flashes song count
-    flash(totalSongs);
+    //flash(totalSongs);
+    Serial.println("Ready");
   }
 }
 
+
 // Function to flash the LED a specified number of times
-void flash(int count)
-{
-    int cycle = 0;
-    while( cycle < count ){
-    digitalWrite(ledPin, LOW);
-    delay(200);
-    digitalWrite(ledPin, HIGH);
-    delay(200);
-    cycle = cycle + 1; 
+void flash(int count) {
+    for (int cycle = 0; cycle < count; cycle++) {
+        digitalWrite(ledPin, LOW);
+        delay(200);
+        digitalWrite(ledPin, HIGH);
+        delay(200);
     }
 }
+
 
 // Function to play the next song in the sequence
 void play()
@@ -125,25 +130,30 @@ void loop()
   /// Read the current state of the pushbutton
   int currentButtonState = digitalRead(buttonPin);
   // check if the pushbutton is pressed. 
-  if (currentButtonState == HIGH && buttonState == LOW) {
-      Serial.println("Button pressed");
-      // Setting play state to 1 to enable play function
-      playstate = 1;
-      // turn LED on
-      digitalWrite(ledPin, HIGH);
+
+  if (currentButtonState != lastButtonState) {
+    //Serial.println(lastTriggerTime);
+    if(millis() > (lastTriggerTime + debounceDelay)){
+      if (currentButtonState == 1 && lastButtonState == LOW ) {
+        lastTriggerTime = millis();
+        playstate = 1;
+        digitalWrite(ledPin, HIGH);
+      }
+    }
   } else {
-    // turn LED off
     digitalWrite(ledPin, LOW);
   }
-  buttonState = currentButtonState;
 
-  // If playstate is set, play the next song
-  if (playstate == 1){
+  lastButtonState = currentButtonState;  // Update the last button state
+
+  if (playstate == 1) {
     playstate = 0;
     Serial.println("playstate: 1");
     play();
   }
+
 }
+
 
 void printDetail(uint8_t type, int value){
   switch (type) {
